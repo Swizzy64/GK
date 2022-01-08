@@ -18,6 +18,49 @@ def shutdown():
     pass
 
 
+# 4.0 auxiliary function
+def drawRectangleDeformed(x, y, a, b, d):
+
+    deformFactor = 1 + d
+
+    # epilepsy warning - rapid colour change
+    # random.seed()
+    
+    # glColor3f(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0))
+    glColor3f(d, d, d)
+    glBegin(GL_TRIANGLES)
+    glVertex2f(x - (0.5 * a) * deformFactor, y - (0.5 * b) * deformFactor)
+    glVertex2f(x - (0.5 * a) * deformFactor, y + (0.5 * b) * deformFactor)
+    glVertex2f(x + (0.5 * a) * deformFactor, y + (0.5 * b) * deformFactor)
+    glEnd()
+
+    # glColor3f(random.uniform(0.0, 1.0), random.uniform(0.0, 1.0), random.uniform(0.0, 1.0))
+    glColor3f(d, d, d)
+    glBegin(GL_TRIANGLES)
+    glVertex2f(x + (0.5 * a) * deformFactor, y + (0.5 * b) * deformFactor)
+    glVertex2f(x + (0.5 * a) * deformFactor, y - (0.5 * b) * deformFactor)
+    glVertex2f(x - (0.5 * a) * deformFactor, y - (0.5 * b) * deformFactor)
+    glEnd()
+
+
+# 4.0 function
+def render40(time):
+    glClear(GL_COLOR_BUFFER_BIT)
+
+    x = 0.0
+    y = 0.0
+    a = 100.0
+    b = 70.0
+    
+    #epilepsy warning - rapid size and colour change
+    random.seed()
+    d = random.uniform(0.0, 1.0)
+
+    drawRectangleDeformed(x, y, a, b, d)
+
+    glFlush()
+
+
 # 3.5 auxiliary function
 def drawRectangle(x, y, a, b):
 
@@ -135,6 +178,7 @@ def main():
         render(glfwGetTime())
         # render30(glfwGetTime())
         # render35(glfwGetTime())
+        # render40(glfwGetTime())
         glfwSwapBuffers(window)
         glfwPollEvents()
     shutdown()
