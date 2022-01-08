@@ -18,6 +18,63 @@ def shutdown():
     pass
 
 
+# 3.5 auxiliary function
+def drawRectangle(x, y, a, b):
+
+    glColor3f(0.0, 0.0, 1.0)
+    glBegin(GL_TRIANGLES)
+    glVertex2f(x - 0.5 * a, y - 0.5 * b)
+    glVertex2f(x - 0.5 * a, y + 0.5 * b)
+    glVertex2f(x + 0.5 * a, y + 0.5 * b)
+    glEnd()
+
+    glColor3f(1.0, 0.0, 0.0)
+    glBegin(GL_TRIANGLES)
+    glVertex2f(x + 0.5 * a, y + 0.5 * b)
+    glVertex2f(x + 0.5 * a, y - 0.5 * b)
+    glVertex2f(x - 0.5 * a, y - 0.5 * b)
+    glEnd()
+
+
+# 3.5 function
+def render35(time):
+    glClear(GL_COLOR_BUFFER_BIT)
+
+    x = 0.0
+    y = 0.0
+    a = 100.0
+    b = 70.0
+
+    drawRectangle(x, y, a, b)
+
+    glFlush()
+
+
+# 3.0 function
+def render30(time):
+    glClear(GL_COLOR_BUFFER_BIT)
+
+    glBegin(GL_TRIANGLES)
+    glColor3f(0.0, 1.0, 0.0)
+    glVertex2f(0.0, 0.0)
+    glColor3f(1.0, 0.0, 0.0)
+    glVertex2f(0.0, 50.0)
+    glColor3f(0.0, 0.0, 1.0)
+    glVertex2f(50.0, 0.0)
+    glEnd()
+
+    glBegin(GL_TRIANGLES)
+    glColor3f(0.0, 1.0, 0.0)
+    glVertex2f(0.0, 0.0)
+    glColor3f(1.0, 0.0, 0.0)
+    glVertex2f(0.0, 50.0)
+    glColor3f(0.0, 0.0, 1.0)
+    glVertex2f(-50.0, 0.0)
+    glEnd()
+
+    glFlush()
+
+
 def render(time):
     glClear(GL_COLOR_BUFFER_BIT)
 
@@ -76,6 +133,8 @@ def main():
     startup()
     while not glfwWindowShouldClose(window):
         render(glfwGetTime())
+        # render30(glfwGetTime())
+        # render35(glfwGetTime())
         glfwSwapBuffers(window)
         glfwPollEvents()
     shutdown()
