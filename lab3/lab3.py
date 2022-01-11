@@ -133,6 +133,24 @@ def eggTriangles():
             glEnd()
 
 
+def eggTriangleStrip():
+    for i in range (0, N):
+        for j in range (0, N):
+            glBegin(GL_TRIANGLE_STRIP)
+            glColor3f(tabColor[i][j][0], tabColor[i][j][1], tabColor[i][j][2])
+            glVertex3f(tab[i][j][0], tab[i][j][1] - 5, tab[i][j][2])  
+            
+            glColor3f(tabColor[i + 1][j][0], tabColor[i + 1][j][1], tabColor[i + 1][j][2])
+            glVertex3f(tab[i + 1][j][0], tab[i + 1][j][1] - 5, tab[i + 1][j][2])
+     
+            glColor3f(tabColor[i][j + 1][0], tabColor[i][j + 1][1], tabColor[i][j + 1][2])
+            glVertex3f(tab[i][j + 1][0], tab[i][j + 1][1] - 5, tab[i][j + 1][2])  
+            
+            glColor3f(tabColor[i + 1][j+1][0], tabColor[i + 1][j+1][1], tabColor[i + 1][j+1][2])
+            glVertex3f(tab[i + 1][j+1][0], tab[i + 1][j+1][1] - 5, tab[i + 1][j+1][2])
+            glEnd()
+
+
 def render30(time):
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
@@ -165,6 +183,18 @@ def render40(time):
 
     spin(time * 180 / pi)
     eggTriangles()
+
+    glFlush()
+
+
+def render45(time):
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    glLoadIdentity()
+
+    axes()
+
+    spin(time * 180 / pi)
+    eggTriangleStrip()
 
     glFlush()
 
@@ -210,7 +240,8 @@ def main():
         # render(glfwGetTime())
         # render30(glfwGetTime())
         # render35(glfwGetTime())
-        render40(glfwGetTime())
+        # render40(glfwGetTime())
+        render45(glfwGetTime())
         glfwSwapBuffers(window)
         glfwPollEvents()
     shutdown()
