@@ -6,6 +6,12 @@ from glfw.GLFW import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
+import numpy
+from math import *
+
+N = 30
+tab = numpy.zeros((N + 1, N + 1, 3))
+
 
 def startup():
     update_viewport(None, 400, 400)
@@ -15,6 +21,12 @@ def startup():
 
 def shutdown():
     pass
+
+
+def spin(angle):
+    glRotate(angle, 1.0, 0.0, 0.0)
+    glRotate(angle, 0.0, 1.0, 0.0)
+    glRotate(angle, 0.0, 0.0, 1.0)
 
 
 def axes():
@@ -40,6 +52,40 @@ def render(time):
     glLoadIdentity()
 
     axes()
+
+    glFlush()
+
+
+def eggValues():
+    for i in range(0, N + 1):
+        for j in range (0, N + 1):
+            u = i / N
+            v = j / N
+            # x
+            tab[i][j] = (-90 * pow(u, 5) + 225 * pow(u, 4) - 270 * pow(u, 3) + 180 * pow(u, 2) - 45 * u) * cos(pi * v)
+            # y
+            tab[i][j][1] = 160 * pow(u, 4) - 320 * pow(u, 3) + 160 * pow(u, 2)
+            # z
+            tab[i][j][2] = (-90 * pow(u, 5) + 225 * pow(u, 4) - 270 * pow(u, 3) + 180 * pow(u, 2) - 45 * u) * sin(pi * v)
+
+
+def eggPoints():
+    glColor(1.0, 1.0, 1.0)
+    for i in range(0, N + 1):
+        for j in range(0, N + 1):
+            glBegin(GL_POINTS)
+            glVertex3f(tab[i][j][0], tab[i][j][1] - 5, tab[i][j][2])
+            glEnd()
+
+
+def render30(time):
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    glLoadIdentity()
+
+    axes()
+
+    spin(time * 180 / pi)
+    eggPoints()
 
     glFlush()
 
@@ -79,7 +125,8 @@ def main():
 
     startup()
     while not glfwWindowShouldClose(window):
-        render(glfwGetTime())
+        # render(glfwGetTime())
+        render30(glfwGetTime())
         glfwSwapBuffers(window)
         glfwPollEvents()
     shutdown()
