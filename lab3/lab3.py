@@ -9,7 +9,7 @@ from OpenGL.GLU import *
 import numpy
 from math import *
 
-N = 30
+N = 20
 tab = numpy.zeros((N + 1, N + 1, 3))
 
 
@@ -78,6 +78,19 @@ def eggPoints():
             glEnd()
 
 
+def eggLines():
+    glColor(1.0, 1.0, 1.0)
+    for i in range (0, N):
+        for j in range (0, N):
+            glBegin(GL_LINES)
+            glVertex3f(tab[i][j][0], tab[i][j][1] - 5, tab[i][j][2])
+            glVertex3f(tab[i + 1][j][0], tab[i + 1][j][1] - 5, tab[i + 1][j][2])
+ 
+            glVertex3f(tab[i][j][0], tab[i][j][1] - 5,  tab[i][j][2])
+            glVertex3f(tab[i][j + 1][0], tab[i][j + 1][1] - 5, tab[i][j + 1][2])
+            glEnd()
+
+
 def render30(time):
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
@@ -86,6 +99,18 @@ def render30(time):
 
     spin(time * 180 / pi)
     eggPoints()
+
+    glFlush()
+
+
+def render35(time):
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    glLoadIdentity()
+
+    axes()
+
+    spin(time * 180 / pi)
+    eggLines()
 
     glFlush()
 
@@ -125,8 +150,10 @@ def main():
 
     startup()
     while not glfwWindowShouldClose(window):
+        eggValues()
         # render(glfwGetTime())
-        render30(glfwGetTime())
+        # render30(glfwGetTime())
+        render35(glfwGetTime())
         glfwSwapBuffers(window)
         glfwPollEvents()
     shutdown()
