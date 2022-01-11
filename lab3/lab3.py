@@ -8,9 +8,11 @@ from OpenGL.GLU import *
 
 import numpy
 from math import *
+import random
 
 N = 20
 tab = numpy.zeros((N + 1, N + 1, 3))
+tabColor = numpy.zeros((N + 1, N + 1, 3))
 
 
 def startup():
@@ -69,6 +71,21 @@ def eggValues():
             tab[i][j][2] = (-90 * pow(u, 5) + 225 * pow(u, 4) - 270 * pow(u, 3) + 180 * pow(u, 2) - 45 * u) * sin(pi * v)
 
 
+def colorValues():
+    for i in range (0, N + 1):
+        for j in range (0, N + 1):
+            u = i / N
+            v = j / N
+            tabColor[i][j][0] =  random.uniform(0.0, 1.0)
+            tabColor[i][j][1] =  random.uniform(0.0, 1.0)
+            tabColor[i][j][2] =  random.uniform(0.0, 1.0)
+    
+    for i in range (0, int(N / 2) - 1):
+        tabColor[N - i][N][0] = tabColor[i][0][0]
+        tabColor[N - i][N][1] = tabColor[i][0][1]
+        tabColor[N - i][N][2] = tabColor[i][0][2]
+
+
 def eggPoints():
     glColor(1.0, 1.0, 1.0)
     for i in range(0, N + 1):
@@ -79,7 +96,7 @@ def eggPoints():
 
 
 def eggLines():
-    glColor(1.0, 1.0, 1.0)
+    glColor(0.5, 0.5, 0.5)
     for i in range (0, N):
         for j in range (0, N):
             glBegin(GL_LINES)
@@ -88,6 +105,31 @@ def eggLines():
  
             glVertex3f(tab[i][j][0], tab[i][j][1] - 5,  tab[i][j][2])
             glVertex3f(tab[i][j + 1][0], tab[i][j + 1][1] - 5, tab[i][j + 1][2])
+            glEnd()
+
+
+def eggTriangles():
+    for i in range (0, N):
+        for j in range (0, N):
+            glBegin(GL_TRIANGLES)
+            glColor3f(tabColor[i][j][0], tabColor[i][j][1], tabColor[i][j][2])
+            glVertex3f(tab[i][j][0], tab[i][j][1] - 5, tab[i][j][2])
+            
+            glColor3f(tabColor[i][j + 1][0], tabColor[i][j + 1][1], tabColor[i][j + 1][2])
+            glVertex3f(tab[i][j + 1][0], tab[i][j + 1][1] - 5, tab[i][j + 1][2])            
+            
+            glColor3f(tabColor[i + 1][j][0], tabColor[i + 1][j][1], tabColor[i + 1][j][2])
+            glVertex3f(tab[i + 1][j][0], tab[i + 1][j][1] - 5, tab[i + 1][j][2])
+   
+   
+            glColor3f(tabColor[i][j+1][0], tabColor[i][j+1][1], tabColor[i][j+1][2])
+            glVertex3f(tab[i][j+1][0], tab[i][j+1][1] - 5,  tab[i][j+1][2])
+           
+            glColor3f(tabColor[i + 1][j][0], tabColor[i + 1][j][1], tabColor[i + 1][j][2])
+            glVertex3f(tab[i + 1][j][0], tab[i + 1][j][1] - 5,  tab[i + 1][j][2])
+           
+            glColor3f(tabColor[i + 1][j + 1][0], tabColor[i + 1][j + 1][1], tabColor[i + 1][j + 1][2])
+            glVertex3f(tab[i + 1][j + 1][0], tab[i + 1][j + 1][1] - 5, tab[i + 1][j + 1][2])
             glEnd()
 
 
@@ -111,6 +153,18 @@ def render35(time):
 
     spin(time * 180 / pi)
     eggLines()
+
+    glFlush()
+
+
+def render40(time):
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    glLoadIdentity()
+
+    axes()
+
+    spin(time * 180 / pi)
+    eggTriangles()
 
     glFlush()
 
@@ -148,12 +202,15 @@ def main():
     glfwSetFramebufferSizeCallback(window, update_viewport)
     glfwSwapInterval(1)
 
+    eggValues()
+    colorValues()
+
     startup()
     while not glfwWindowShouldClose(window):
-        eggValues()
         # render(glfwGetTime())
         # render30(glfwGetTime())
-        render35(glfwGetTime())
+        # render35(glfwGetTime())
+        render40(glfwGetTime())
         glfwSwapBuffers(window)
         glfwPollEvents()
     shutdown()
