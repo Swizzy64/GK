@@ -91,7 +91,7 @@ def eggPoints():
     for i in range(0, N + 1):
         for j in range(0, N + 1):
             glBegin(GL_POINTS)
-            glVertex3f(tab[i][j][0], tab[i][j][1] - 5, tab[i][j][2])
+            glVertex3f(tab[i][j][0], tab[i][j][1], tab[i][j][2])
             glEnd()
 
 
@@ -100,11 +100,11 @@ def eggLines():
     for i in range (0, N):
         for j in range (0, N):
             glBegin(GL_LINES)
-            glVertex3f(tab[i][j][0], tab[i][j][1] - 5, tab[i][j][2])
-            glVertex3f(tab[i + 1][j][0], tab[i + 1][j][1] - 5, tab[i + 1][j][2])
+            glVertex3f(tab[i][j][0], tab[i][j][1], tab[i][j][2])
+            glVertex3f(tab[i + 1][j][0], tab[i + 1][j][1], tab[i + 1][j][2])
  
-            glVertex3f(tab[i][j][0], tab[i][j][1] - 5,  tab[i][j][2])
-            glVertex3f(tab[i][j + 1][0], tab[i][j + 1][1] - 5, tab[i][j + 1][2])
+            glVertex3f(tab[i][j][0], tab[i][j][1],  tab[i][j][2])
+            glVertex3f(tab[i][j + 1][0], tab[i][j + 1][1], tab[i][j + 1][2])
             glEnd()
 
 
@@ -113,23 +113,23 @@ def eggTriangles():
         for j in range (0, N):
             glBegin(GL_TRIANGLES)
             glColor3f(tabColor[i][j][0], tabColor[i][j][1], tabColor[i][j][2])
-            glVertex3f(tab[i][j][0], tab[i][j][1] - 5, tab[i][j][2])
+            glVertex3f(tab[i][j][0], tab[i][j][1], tab[i][j][2])
             
             glColor3f(tabColor[i][j + 1][0], tabColor[i][j + 1][1], tabColor[i][j + 1][2])
-            glVertex3f(tab[i][j + 1][0], tab[i][j + 1][1] - 5, tab[i][j + 1][2])            
+            glVertex3f(tab[i][j + 1][0], tab[i][j + 1][1], tab[i][j + 1][2])            
             
             glColor3f(tabColor[i + 1][j][0], tabColor[i + 1][j][1], tabColor[i + 1][j][2])
-            glVertex3f(tab[i + 1][j][0], tab[i + 1][j][1] - 5, tab[i + 1][j][2])
+            glVertex3f(tab[i + 1][j][0], tab[i + 1][j][1], tab[i + 1][j][2])
    
    
             glColor3f(tabColor[i][j+1][0], tabColor[i][j+1][1], tabColor[i][j+1][2])
-            glVertex3f(tab[i][j+1][0], tab[i][j+1][1] - 5,  tab[i][j+1][2])
+            glVertex3f(tab[i][j+1][0], tab[i][j+1][1],  tab[i][j+1][2])
            
             glColor3f(tabColor[i + 1][j][0], tabColor[i + 1][j][1], tabColor[i + 1][j][2])
-            glVertex3f(tab[i + 1][j][0], tab[i + 1][j][1] - 5,  tab[i + 1][j][2])
+            glVertex3f(tab[i + 1][j][0], tab[i + 1][j][1],  tab[i + 1][j][2])
            
             glColor3f(tabColor[i + 1][j + 1][0], tabColor[i + 1][j + 1][1], tabColor[i + 1][j + 1][2])
-            glVertex3f(tab[i + 1][j + 1][0], tab[i + 1][j + 1][1] - 5, tab[i + 1][j + 1][2])
+            glVertex3f(tab[i + 1][j + 1][0], tab[i + 1][j + 1][1], tab[i + 1][j + 1][2])
             glEnd()
 
 
@@ -138,16 +138,16 @@ def eggTriangleStrip():
         for j in range (0, N):
             glBegin(GL_TRIANGLE_STRIP)
             glColor3f(tabColor[i][j][0], tabColor[i][j][1], tabColor[i][j][2])
-            glVertex3f(tab[i][j][0], tab[i][j][1] - 5, tab[i][j][2])  
+            glVertex3f(tab[i][j][0], tab[i][j][1], tab[i][j][2])  
             
             glColor3f(tabColor[i + 1][j][0], tabColor[i + 1][j][1], tabColor[i + 1][j][2])
-            glVertex3f(tab[i + 1][j][0], tab[i + 1][j][1] - 5, tab[i + 1][j][2])
+            glVertex3f(tab[i + 1][j][0], tab[i + 1][j][1], tab[i + 1][j][2])
      
             glColor3f(tabColor[i][j + 1][0], tabColor[i][j + 1][1], tabColor[i][j + 1][2])
-            glVertex3f(tab[i][j + 1][0], tab[i][j + 1][1] - 5, tab[i][j + 1][2])  
+            glVertex3f(tab[i][j + 1][0], tab[i][j + 1][1], tab[i][j + 1][2])  
             
             glColor3f(tabColor[i + 1][j+1][0], tabColor[i + 1][j+1][1], tabColor[i + 1][j+1][2])
-            glVertex3f(tab[i + 1][j+1][0], tab[i + 1][j+1][1] - 5, tab[i + 1][j+1][2])
+            glVertex3f(tab[i + 1][j+1][0], tab[i + 1][j+1][1], tab[i + 1][j+1][2])
             glEnd()
 
 
@@ -158,6 +158,8 @@ def render30(time):
     axes()
 
     spin(time * 180 / pi)
+
+    glTranslatef(0, -5, 0)
     eggPoints()
 
     glFlush()
@@ -170,6 +172,8 @@ def render35(time):
     axes()
 
     spin(time * 180 / pi)
+
+    glTranslatef(0, -5, 0)
     eggLines()
 
     glFlush()
@@ -182,6 +186,8 @@ def render40(time):
     axes()
 
     spin(time * 180 / pi)
+
+    glTranslatef(0, -5, 0)
     eggTriangles()
 
     glFlush()
@@ -194,6 +200,8 @@ def render45(time):
     axes()
 
     spin(time * 180 / pi)
+
+    glTranslatef(0, -5, 0)
     eggTriangleStrip()
 
     glFlush()
@@ -241,7 +249,7 @@ def main():
         # render30(glfwGetTime())
         # render35(glfwGetTime())
         # render40(glfwGetTime())
-        render45(glfwGetTime())
+        # render45(glfwGetTime())
         glfwSwapBuffers(window)
         glfwPollEvents()
     shutdown()
