@@ -134,21 +134,17 @@ def eggTriangles():
 
 
 def eggTriangleStrip():
+    glBegin(GL_TRIANGLE_STRIP)
     for i in range (0, N):
-        for j in range (0, N):
-            glBegin(GL_TRIANGLE_STRIP)
+        for j in range (0, N + 1):
+            
             glColor3f(tabColor[i][j][0], tabColor[i][j][1], tabColor[i][j][2])
             glVertex3f(tab[i][j][0], tab[i][j][1], tab[i][j][2])  
             
             glColor3f(tabColor[i + 1][j][0], tabColor[i + 1][j][1], tabColor[i + 1][j][2])
             glVertex3f(tab[i + 1][j][0], tab[i + 1][j][1], tab[i + 1][j][2])
-     
-            glColor3f(tabColor[i][j + 1][0], tabColor[i][j + 1][1], tabColor[i][j + 1][2])
-            glVertex3f(tab[i][j + 1][0], tab[i][j + 1][1], tab[i][j + 1][2])  
             
-            glColor3f(tabColor[i + 1][j+1][0], tabColor[i + 1][j+1][1], tabColor[i + 1][j+1][2])
-            glVertex3f(tab[i + 1][j+1][0], tab[i + 1][j+1][1], tab[i + 1][j+1][2])
-            glEnd()
+    glEnd()
 
 
 def render30(time):
