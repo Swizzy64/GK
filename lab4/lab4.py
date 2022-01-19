@@ -10,11 +10,15 @@ from OpenGL.GLU import *
 viewer = [0.0, 0.0, 10.0]
 
 theta = 0.0
+phi = 0.0
 pix2angle = 1.0
+piy2angle = 1.0
 
 left_mouse_button_pressed = 0
 mouse_x_pos_old = 0
+mouse_y_pos_old = 0
 delta_x = 0
+delta_y = 0
 
 
 def startup():
@@ -100,6 +104,29 @@ def render(time):
     glFlush()
 
 
+def render30(time):
+    global theta
+    global phi
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    glLoadIdentity()
+
+    gluLookAt(viewer[0], viewer[1], viewer[2],
+              0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+
+    if left_mouse_button_pressed:
+        theta += delta_x * pix2angle
+        phi += delta_y * piy2angle
+
+    glRotatef(theta, 0.0, 1.0, 0.0)
+    glRotatef(phi, 1.0, 0.0, 0.0)
+
+    axes()
+    example_object()
+
+    glFlush()
+
+
 def update_viewport(window, width, height):
     global pix2angle
     pix2angle = 360.0 / width
@@ -125,10 +152,15 @@ def keyboard_key_callback(window, key, scancode, action, mods):
 
 def mouse_motion_callback(window, x_pos, y_pos):
     global delta_x
+    global delta_y
     global mouse_x_pos_old
+    global mouse_y_pos_old
 
     delta_x = x_pos - mouse_x_pos_old
     mouse_x_pos_old = x_pos
+
+    delta_y = y_pos - mouse_y_pos_old
+    mouse_y_pos_old = y_pos
 
 
 def mouse_button_callback(window, button, action, mods):
@@ -158,7 +190,8 @@ def main():
 
     startup()
     while not glfwWindowShouldClose(window):
-        render(glfwGetTime())
+        # render(glfwGetTime())
+        render30(glfwGetTime())
         glfwSwapBuffers(window)
         glfwPollEvents()
     shutdown()
