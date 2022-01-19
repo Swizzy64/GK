@@ -52,7 +52,7 @@ def render40(time):
     a = 100.0
     b = 70.0
     
-    #epilepsy warning - rapid size and colour change
+    # epilepsy warning - rapid size and colour change
     random.seed()
     d = random.uniform(0.0, 1.0)
 
@@ -175,7 +175,7 @@ def main():
 
     startup()
     while not glfwWindowShouldClose(window):
-        render(glfwGetTime())
+        # render(glfwGetTime())
         # render30(glfwGetTime())
         # render35(glfwGetTime())
         # render40(glfwGetTime())
