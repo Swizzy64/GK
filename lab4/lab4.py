@@ -13,8 +13,13 @@ theta = 0.0
 phi = 0.0
 pix2angle = 1.0
 piy2angle = 1.0
+pix22angle = 1.0
+
+scale = 1.0
 
 left_mouse_button_pressed = 0
+right_mouse_button_pressed = 0
+
 mouse_x_pos_old = 0
 mouse_y_pos_old = 0
 delta_x = 0
@@ -127,6 +132,37 @@ def render30(time):
     glFlush()
 
 
+def render35(time):
+    global theta
+    global phi
+    global scale
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    glLoadIdentity()
+
+    gluLookAt(viewer[0], viewer[1], viewer[2],
+              0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+    if left_mouse_button_pressed:
+        theta += delta_x * pix2angle
+        phi += delta_y * piy2angle
+
+    glRotatef(theta, 0.0, 1.0, 0.0)
+    glRotatef(phi, 1.0, 0.0, 0.0)
+
+    if right_mouse_button_pressed:
+        if delta_x > 0 and scale < 3:
+            scale += 0.005
+        else:
+            if scale >= 0.3:
+                scale -= 0.005
+    glScalef(scale, scale, scale)
+
+    axes()
+    example_object()
+
+    glFlush()
+
+
 def update_viewport(window, width, height):
     global pix2angle
     pix2angle = 360.0 / width
@@ -165,11 +201,17 @@ def mouse_motion_callback(window, x_pos, y_pos):
 
 def mouse_button_callback(window, button, action, mods):
     global left_mouse_button_pressed
+    global right_mouse_button_pressed
 
     if button == GLFW_MOUSE_BUTTON_LEFT and action == GLFW_PRESS:
         left_mouse_button_pressed = 1
     else:
         left_mouse_button_pressed = 0
+
+    if button == GLFW_MOUSE_BUTTON_RIGHT and action == GLFW_PRESS:
+        right_mouse_button_pressed = 1
+    else:
+        right_mouse_button_pressed = 0
 
 
 def main():
@@ -191,7 +233,8 @@ def main():
     startup()
     while not glfwWindowShouldClose(window):
         # render(glfwGetTime())
-        render30(glfwGetTime())
+        # render30(glfwGetTime())
+        render35(glfwGetTime())
         glfwSwapBuffers(window)
         glfwPollEvents()
     shutdown()
