@@ -168,7 +168,6 @@ def render35(time):
 def render40(time):
     global theta
     global phi
-    global scale
     global R
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
