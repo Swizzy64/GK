@@ -150,11 +150,11 @@ def render35(time):
     glRotatef(phi, 1.0, 0.0, 0.0)
 
     if right_mouse_button_pressed:
-        if delta_x > 0 and scale < 3:
-            scale += 0.005
+        if delta_x > 0 and scale < 2:
+            scale += 0.01
         else:
-            if scale >= 0.3:
-                scale -= 0.005
+            if scale >= 0.5:
+                scale -= 0.01
     glScalef(scale, scale, scale)
 
     axes()
