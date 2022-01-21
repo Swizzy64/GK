@@ -269,7 +269,7 @@ def main():
         # render(glfwGetTime())
         # render30(glfwGetTime())
         # render35(glfwGetTime())
-        render40(glfwGetTime())
+        # render40(glfwGetTime())
         glfwSwapBuffers(window)
         glfwPollEvents()
     shutdown()
