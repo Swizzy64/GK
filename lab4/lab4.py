@@ -234,7 +234,7 @@ def main():
     while not glfwWindowShouldClose(window):
         # render(glfwGetTime())
         # render30(glfwGetTime())
-        render35(glfwGetTime())
+        # render35(glfwGetTime())
         glfwSwapBuffers(window)
         glfwPollEvents()
     shutdown()
