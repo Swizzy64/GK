@@ -6,6 +6,8 @@ from glfw.GLFW import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
+from math import *
+
 
 viewer = [0.0, 0.0, 10.0]
 
@@ -13,9 +15,9 @@ theta = 0.0
 phi = 0.0
 pix2angle = 1.0
 piy2angle = 1.0
-pix22angle = 1.0
 
 scale = 1.0
+R = 7.0
 
 left_mouse_button_pressed = 0
 right_mouse_button_pressed = 0
@@ -163,6 +165,39 @@ def render35(time):
     glFlush()
 
 
+def render40(time):
+    global theta
+    global phi
+    global scale
+    global R
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    glLoadIdentity()
+
+    x_eye = R * cos(2*pi*theta/360) * cos(2*pi*phi/360)
+    y_eye = R * sin(2*pi*phi/360)
+    z_eye = R * sin(2*pi*theta/360) * cos(2*pi*phi/360)
+
+    if left_mouse_button_pressed:
+        theta += delta_x * pix2angle
+        phi += delta_y * piy2angle
+
+    if right_mouse_button_pressed:
+        if delta_x > 0 and R < 10:
+            R += 0.1
+        else:
+            if R >= 1:
+                R -= 0.1
+
+    gluLookAt(x_eye, y_eye, z_eye,
+              0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+
+    axes()
+    example_object()
+
+    glFlush()
+
+
 def update_viewport(window, width, height):
     global pix2angle
     pix2angle = 360.0 / width
@@ -235,6 +270,7 @@ def main():
         # render(glfwGetTime())
         # render30(glfwGetTime())
         # render35(glfwGetTime())
+        render40(glfwGetTime())
         glfwSwapBuffers(window)
         glfwPollEvents()
     shutdown()
