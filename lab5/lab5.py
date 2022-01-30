@@ -26,11 +26,6 @@ light_diffuse = [0.8, 0.8, 0.0, 1.0]
 light_specular = [1.0, 1.0, 1.0, 1.0]
 light_position = [0.0, 0.0, 10.0, 1.0]
 
-mat_ambient1 = [1.0, 1.0, 1.0, 1.0]
-mat_diffuse1 = [1.0, 1.0, 1.0, 1.0]
-mat_specular1 = [1.0, 1.0, 1.0, 1.0]
-mat_shininess1 = 20.0
-
 light_ambient1 = [0.05, 0.1, 0.0, 1.0]
 light_diffuse1 = [1.0, 0.0, 1.0, 1.0]
 light_specular1 = [1.0, 1.0, 1.0, 1.0]
@@ -64,11 +59,6 @@ def startup():
     glEnable(GL_LIGHTING)
     glEnable(GL_LIGHT0)
 
-    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient1)
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse1)
-    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular1)
-    glMaterialf(GL_FRONT, GL_SHININESS, mat_shininess1)
-
     glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient1)
     glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse1)
     glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular1)
@@ -78,8 +68,6 @@ def startup():
     glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, att_linear)
     glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, att_quadratic)
 
-    glShadeModel(GL_SMOOTH)
-    glEnable(GL_LIGHTING)
     glEnable(GL_LIGHT1)
 
 
