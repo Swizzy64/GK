@@ -62,9 +62,9 @@ def startup():
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
 
-    # modyfikacja
-    # potrzeba wklejenia całej ścieżki inaczej file does not exist
+    # whole path, otherwise "file does not exist"
     # r - mode. If given, it should be r
+    # does not work without giving, no idea why
     image = Image.open(r"C:\Users\lliso\Desktop\GK\lab6\tekstura.tga")
 
     glTexImage2D(
