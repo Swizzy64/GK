@@ -62,7 +62,10 @@ def startup():
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
 
-    image = Image.open("tekstura.tga")
+    # modyfikacja
+    # potrzeba wklejenia całej ścieżki inaczej file does not exist
+    # r - mode. If given, it should be r
+    image = Image.open(r"C:\Users\lliso\Desktop\GK\lab6\tekstura.tga")
 
     glTexImage2D(
         GL_TEXTURE_2D, 0, 3, image.size[0], image.size[1], 0,
@@ -95,6 +98,41 @@ def render(time):
     glVertex3f(5.0, -5.0, 0.0)
     glTexCoord2f(0.5, 1.0)
     glVertex3f(0.0, 5.0, 0.0)
+    glEnd()
+
+    glFlush()
+
+
+def render30(time):
+    global theta
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    glLoadIdentity()
+
+    gluLookAt(viewer[0], viewer[1], viewer[2],
+              0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+
+    if left_mouse_button_pressed:
+        theta += delta_x * pix2angle
+
+    glRotatef(theta, 0.0, 1.0, 0.0)
+
+    glBegin(GL_TRIANGLES)
+    glTexCoord2f(0.0, 0.0)
+    glVertex3f(-5.0, -5.0, 0.0)
+    glTexCoord2f(1.0, 0.0)
+    glVertex3f(5.0, -5.0, 0.0)
+    glTexCoord2f(0.0, 1.0)
+    glVertex3f(-5.0, 5.0, 0.0)
+    glEnd()
+
+    glBegin(GL_TRIANGLES)
+    glTexCoord2f(0.0, 1.0)
+    glVertex3f(-5.0, 5.0, 0.0)
+    glTexCoord2f(1.0, 0.0)
+    glVertex3f(5.0, -5.0, 0.0)
+    glTexCoord2f(1.0, 1.0)
+    glVertex3f(5.0, 5.0, 0.0)
     glEnd()
 
     glFlush()
@@ -158,7 +196,8 @@ def main():
 
     startup()
     while not glfwWindowShouldClose(window):
-        render(glfwGetTime())
+        # render(glfwGetTime())
+        render30(glfwGetTime())
         glfwSwapBuffers(window)
         glfwPollEvents()
     shutdown()
