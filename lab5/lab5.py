@@ -59,6 +59,7 @@ def startup():
     glEnable(GL_LIGHTING)
     glEnable(GL_LIGHT0)
 
+    # slice - part of the table f.eg. tab[5:9] == tab[5], tab[6], tab[7], tab[8]; tab[9] is out of range
     glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient1)
     glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse1)
     glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular1)
