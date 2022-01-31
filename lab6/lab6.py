@@ -65,7 +65,9 @@ def startup():
     # whole path, otherwise "file does not exist"
     # r - mode. If given, it should be r
     # does not work without giving, no idea why
-    image = Image.open(r"C:\Users\lliso\Desktop\GK\lab6\tekstura.tga")
+    # path relative to GK directory
+    
+    image = Image.open(r"lab6\tekstura.tga")
 
     glTexImage2D(
         GL_TEXTURE_2D, 0, 3, image.size[0], image.size[1], 0,
@@ -117,20 +119,32 @@ def render30(time):
 
     glRotatef(theta, 0.0, 1.0, 0.0)
 
-    glBegin(GL_TRIANGLES)
+    # glBegin(GL_TRIANGLES)
+    # glTexCoord2f(0.0, 0.0)
+    # glVertex3f(-5.0, -5.0, 0.0)
+    # glTexCoord2f(1.0, 0.0)
+    # glVertex3f(5.0, -5.0, 0.0)
+    # glTexCoord2f(0.0, 1.0)
+    # glVertex3f(-5.0, 5.0, 0.0)
+    # glEnd()
+
+    # glBegin(GL_TRIANGLES)
+    # glTexCoord2f(0.0, 1.0)
+    # glVertex3f(-5.0, 5.0, 0.0)
+    # glTexCoord2f(1.0, 0.0)
+    # glVertex3f(5.0, -5.0, 0.0)
+    # glTexCoord2f(1.0, 1.0)
+    # glVertex3f(5.0, 5.0, 0.0)
+    # glEnd()
+
+    # less memory usage
+    glBegin(GL_TRIANGLE_STRIP)
     glTexCoord2f(0.0, 0.0)
     glVertex3f(-5.0, -5.0, 0.0)
     glTexCoord2f(1.0, 0.0)
     glVertex3f(5.0, -5.0, 0.0)
     glTexCoord2f(0.0, 1.0)
     glVertex3f(-5.0, 5.0, 0.0)
-    glEnd()
-
-    glBegin(GL_TRIANGLES)
-    glTexCoord2f(0.0, 1.0)
-    glVertex3f(-5.0, 5.0, 0.0)
-    glTexCoord2f(1.0, 0.0)
-    glVertex3f(5.0, -5.0, 0.0)
     glTexCoord2f(1.0, 1.0)
     glVertex3f(5.0, 5.0, 0.0)
     glEnd()
@@ -197,7 +211,7 @@ def main():
     startup()
     while not glfwWindowShouldClose(window):
         # render(glfwGetTime())
-        render30(glfwGetTime())
+        # render30(glfwGetTime())
         glfwSwapBuffers(window)
         glfwPollEvents()
     shutdown()
